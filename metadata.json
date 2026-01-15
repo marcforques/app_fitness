@@ -1,0 +1,5 @@
+{
+  "name": "MiProgreso",
+  "description": "A comprehensive mobile-first fitness tracker for personal use, allowing users to track gym and running progress, calculate PRs, and monitor body weight.",
+  "requestFramePermissions": []
+}
