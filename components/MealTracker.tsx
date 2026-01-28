@@ -177,10 +177,10 @@ const MealTracker: React.FC<MealTrackerProps> = ({ logs, onAdd, onDelete }) => {
 
             {/* Add Food Modal Overlay */}
             {isAdding && (
-                <div className="fixed inset-0 bg-black/80 z-50 flex items-end sm:items-center justify-center p-4 backdrop-blur-sm animate-in fade-in duration-200">
-                    <div className="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden animate-in slide-in-from-bottom duration-300">
-                        <form onSubmit={handleSubmit}>
-                            <div className="bg-black px-6 py-4 flex justify-between items-center text-white border-b border-slate-800">
+                <div className="fixed inset-0 bg-black/80 z-[60] flex items-end sm:items-center justify-center p-4 backdrop-blur-sm animate-in fade-in duration-200">
+                    <div className="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden animate-in slide-in-from-bottom duration-300 max-h-[85vh] flex flex-col">
+                        <form onSubmit={handleSubmit} className="flex flex-col h-full">
+                            <div className="bg-black px-6 py-4 flex justify-between items-center text-white border-b border-slate-800 shrink-0">
                                 <h3 className="font-bold text-lg tracking-tight">Añadir a {addingMealType.charAt(0).toUpperCase() + addingMealType.slice(1)}</h3>
                                 <button
                                     type="button"
@@ -193,7 +193,7 @@ const MealTracker: React.FC<MealTrackerProps> = ({ logs, onAdd, onDelete }) => {
                                 </button>
                             </div>
 
-                            <div className="p-6 space-y-4">
+                            <div className="p-6 space-y-4 overflow-y-auto flex-1">
                                 <div>
                                     <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1 tracking-wider">Nombre Alimento</label>
                                     <input
@@ -267,10 +267,12 @@ const MealTracker: React.FC<MealTrackerProps> = ({ logs, onAdd, onDelete }) => {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
+                            <div className="p-4 border-t border-slate-100 bg-white shrink-0">
                                 <button
                                     type="submit"
-                                    className="w-full mt-4 bg-blue-700 text-white py-4 rounded-xl font-bold hover:bg-blue-800 transition-colors shadow-lg shadow-blue-200"
+                                    className="w-full bg-blue-700 text-white py-4 rounded-xl font-bold hover:bg-blue-800 transition-colors shadow-lg shadow-blue-200 mb-safe"
                                 >
                                     Confirmar
                                 </button>
