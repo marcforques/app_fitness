@@ -15,15 +15,21 @@ export default defineConfig(({ mode }) => {
       react(),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
+        includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg', 'logo.svg'],
         manifest: {
-          name: 'Mi Progreso Fitness',
-          short_name: 'MiProgreso',
-          description: 'Tu compañero personal de entrenamiento',
+          name: 'MINDREP',
+          short_name: 'MINDREP',
+          description: 'Rendimiento y Nutrición',
           theme_color: '#ffffff',
-          background_color: '#f8fafc',
+          background_color: '#ffffff',
           display: 'standalone',
           icons: [
+            {
+              src: 'logo.svg',
+              sizes: '192x192 512x512',
+              type: 'image/svg+xml',
+              purpose: 'any maskable'
+            },
             {
               src: 'pwa-192x192.png',
               sizes: '192x192',
