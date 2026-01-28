@@ -61,4 +61,18 @@ export interface BodyWeightLog {
   created_at: string;
 }
 
-export type AppView = 'home' | 'history' | 'weight' | 'exercises' | 'new-workout' | 'routines' | 'settings';
+export type MealType = 'desayuno' | 'almuerzo' | 'comida' | 'merienda' | 'cena';
+
+export interface FoodLog {
+  id: string;
+  date: string;
+  name: string;
+  calories: number;
+  protein_g: number;
+  carbs_g: number;
+  fats_g: number;
+  type: MealType;
+  created_at: string;
+}
+
+export type AppView = 'home' | 'history' | 'weight' | 'exercises' | 'new-workout' | 'routines' | 'settings' | 'meals';

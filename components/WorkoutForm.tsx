@@ -93,31 +93,31 @@ const WorkoutForm: React.FC<WorkoutFormProps> = ({ initialWorkout, availableExer
 
   return (
     <div className="space-y-6 pb-32">
-      <header className="flex justify-between items-center bg-white/50 backdrop-blur-sm sticky top-0 py-2 z-10 px-1">
-        <h1 className="text-2xl font-bold text-slate-900">{initialWorkout ? 'Editar' : 'Nueva Sesión'}</h1>
-        <button onClick={onCancel} className="text-rose-500 font-bold text-sm bg-rose-50 px-3 py-1.5 rounded-full">CANCELAR</button>
+      <header className="flex justify-between items-center bg-white/50 backdrop-blur-sm sticky top-0 py-4 z-10 px-1 border-b border-transparent">
+        <h1 className="text-xl font-bold text-black uppercase tracking-tight">{initialWorkout ? 'Editar Sesión' : 'Nueva Sesión'}</h1>
+        <button onClick={onCancel} className="text-slate-400 font-bold text-xs hover:text-red-600 transition-colors uppercase tracking-wider">CANCELAR</button>
       </header>
 
       {showRoutineSelector && (
-        <div className="bg-indigo-50 p-6 rounded-3xl border border-indigo-100 space-y-4 animate-in fade-in duration-300">
-          <h2 className="text-indigo-900 font-bold text-center">Selecciona una rutina</h2>
+        <div className="space-y-4 animate-in fade-in duration-300">
+          <h2 className="text-slate-900 font-bold text-center uppercase tracking-widest text-sm">Selecciona una rutina</h2>
           <div className="grid grid-cols-1 gap-3">
             {routines.map(r => (
               <button
                 key={r.id}
                 onClick={() => handleSelectRoutine(r)}
-                className="w-full bg-white p-5 rounded-2xl shadow-sm border border-indigo-100 text-indigo-700 font-bold text-left flex justify-between items-center active:scale-[0.98] transition-all"
+                className="w-full bg-white p-5 rounded-xl border border-slate-200 text-slate-900 font-bold text-left flex justify-between items-center active:bg-slate-50 transition-all hover:border-blue-700 group"
               >
                 <div>
-                  <div className="text-lg">{r.name}</div>
-                  <div className="text-[10px] text-slate-400 font-normal uppercase mt-1">{r.exercise_ids.length} ejercicios</div>
+                  <div className="text-lg group-hover:text-blue-700 transition-colors">{r.name}</div>
+                  <div className="text-[10px] text-slate-400 font-bold uppercase mt-1 tracking-wide">{r.exercise_ids.length} ejercicios</div>
                 </div>
-                <svg className="w-5 h-5 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" /></svg>
+                <svg className="w-5 h-5 text-slate-300 group-hover:text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" /></svg>
               </button>
             ))}
             <button
               onClick={() => { setShowRoutineSelector(false); setSelectedRoutineId(undefined); }}
-              className="w-full bg-indigo-600 text-white p-5 rounded-2xl font-bold shadow-lg shadow-indigo-100 active:scale-[0.98] transition-all"
+              className="w-full bg-black text-white p-5 rounded-xl font-bold active:scale-[0.98] transition-all uppercase tracking-wide text-sm flex justify-center items-center gap-2 hover:bg-slate-800"
             >
               Empezar sesión libre
             </button>
@@ -151,10 +151,10 @@ const WorkoutForm: React.FC<WorkoutFormProps> = ({ initialWorkout, availableExer
 
           <div className="space-y-4">
             {selectedExercises.map((we, weIdx) => (
-              <div key={weIdx} className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden animate-in slide-in-from-bottom-2 duration-300">
-                <div className="bg-slate-50 px-5 py-3 flex justify-between items-center border-b border-slate-100">
-                  <span className="text-sm font-bold text-slate-700 uppercase">{we.name}</span>
-                  <button onClick={() => removeExercise(weIdx)} className="text-rose-400 p-1 bg-white rounded-full shadow-sm">
+              <div key={weIdx} className="bg-white rounded-2xl border border-slate-200 overflow-hidden animate-in slide-in-from-bottom-2 duration-300 shadow-sm">
+                <div className="bg-slate-50 px-5 py-4 flex justify-between items-center border-b border-slate-200">
+                  <span className="text-sm font-bold text-black uppercase tracking-wide">{we.name}</span>
+                  <button onClick={() => removeExercise(weIdx)} className="text-slate-400 hover:text-red-500 transition-colors">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                   </button>
                 </div>
@@ -162,62 +162,62 @@ const WorkoutForm: React.FC<WorkoutFormProps> = ({ initialWorkout, availableExer
                 <div className="p-5">
                   {we.type === ExerciseType.GYM ? (
                     <div className="space-y-4">
-                      <div className="grid grid-cols-12 gap-2 text-[10px] font-bold text-slate-400 uppercase px-1">
+                      <div className="grid grid-cols-12 gap-2 text-[10px] font-bold text-slate-400 uppercase px-1 tracking-wider">
                         <div className="col-span-2 text-center">Set</div>
                         <div className="col-span-5 text-center">Peso (kg)</div>
                         <div className="col-span-5 text-center">Reps</div>
                       </div>
                       {we.sets.map((s: any, sIdx: number) => (
                         <div key={sIdx} className="grid grid-cols-12 gap-3 items-center">
-                          <div className="col-span-2 text-center text-xs font-bold text-slate-300">{sIdx + 1}</div>
+                          <div className="col-span-2 text-center text-xs font-bold text-slate-400">{sIdx + 1}</div>
                           <input
                             type="number" step="0.5"
-                            className="col-span-5 p-3 rounded-xl bg-slate-50 text-center text-sm font-bold border-none focus:ring-2 focus:ring-indigo-500"
+                            className="col-span-5 p-3 rounded-lg bg-slate-50 text-center text-sm font-bold border-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all placeholder:text-slate-300"
                             value={s.weight_kg === 0 ? '' : s.weight_kg}
-                            placeholder="kg"
+                            placeholder="-"
                             onChange={(e) => updateSet(weIdx, sIdx, 'weight_kg', e.target.value)}
                           />
                           <input
                             type="number"
-                            className="col-span-5 p-3 rounded-xl bg-slate-50 text-center text-sm font-bold border-none focus:ring-2 focus:ring-indigo-500"
+                            className="col-span-5 p-3 rounded-lg bg-slate-50 text-center text-sm font-bold border-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all placeholder:text-slate-300"
                             value={s.reps === 0 ? '' : s.reps}
-                            placeholder="reps"
+                            placeholder="-"
                             onChange={(e) => updateSet(weIdx, sIdx, 'reps', e.target.value)}
                           />
                         </div>
                       ))}
                       <button
                         onClick={() => addSet(weIdx)}
-                        className="w-full py-3 border-2 border-dashed border-indigo-100 rounded-2xl text-indigo-500 text-xs font-bold active:bg-indigo-50 transition-colors"
+                        className="w-full py-3 border border-dashed border-slate-300 rounded-xl text-slate-400 text-[10px] font-bold uppercase tracking-widest hover:border-blue-500 hover:text-blue-600 transition-all"
                       >
-                        + AÑADIR SERIE
+                        + Añadir Serie
                       </button>
                     </div>
                   ) : (
                     <div className="grid grid-cols-3 gap-3">
                       <div>
-                        <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Dist. (km)</label>
+                        <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block tracking-wider">Dist. (km)</label>
                         <input
                           type="number" step="0.1"
-                          className="w-full p-3 rounded-xl bg-slate-50 text-center text-sm font-bold border-none focus:ring-2 focus:ring-indigo-500"
+                          className="w-full p-3 rounded-lg bg-slate-50 text-center text-sm font-bold border-none focus:ring-2 focus:ring-blue-600"
                           value={we.running_log.distance_km === 0 ? '' : we.running_log.distance_km}
                           onChange={(e) => updateRunning(weIdx, 'distance_km', e.target.value)}
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Tiempo (min)</label>
+                        <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block tracking-wider">Tiempo</label>
                         <input
                           type="number"
-                          className="w-full p-3 rounded-xl bg-slate-50 text-center text-sm font-bold border-none focus:ring-2 focus:ring-indigo-500"
+                          className="w-full p-3 rounded-lg bg-slate-50 text-center text-sm font-bold border-none focus:ring-2 focus:ring-blue-600"
                           value={we.running_log.time_minutes === 0 ? '' : we.running_log.time_minutes}
                           onChange={(e) => updateRunning(weIdx, 'time_minutes', e.target.value)}
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Puls.</label>
+                        <label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block tracking-wider">Puls.</label>
                         <input
                           type="number"
-                          className="w-full p-3 rounded-xl bg-slate-50 text-center text-sm font-bold border-none focus:ring-2 focus:ring-indigo-500"
+                          className="w-full p-3 rounded-lg bg-slate-50 text-center text-sm font-bold border-none focus:ring-2 focus:ring-blue-600"
                           value={we.running_log.avg_heart_rate === 0 ? '' : we.running_log.avg_heart_rate}
                           onChange={(e) => updateRunning(weIdx, 'avg_heart_rate', e.target.value)}
                         />
@@ -231,10 +231,10 @@ const WorkoutForm: React.FC<WorkoutFormProps> = ({ initialWorkout, availableExer
 
           <button
             onClick={() => setIsSelectorOpen(true)}
-            className="w-full py-5 border-2 border-dashed border-slate-200 rounded-3xl text-slate-400 font-bold text-sm flex items-center justify-center gap-2 active:bg-slate-50 transition-all mt-6"
+            className="w-full py-5 border-2 border-dashed border-slate-200 rounded-2xl text-slate-400 font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-slate-50 transition-all mt-6"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
-            AÑADIR OTRO EJERCICIO
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" /></svg>
+            Añadir Ejercicio
           </button>
         </>
       )}
@@ -277,9 +277,9 @@ const WorkoutForm: React.FC<WorkoutFormProps> = ({ initialWorkout, availableExer
               notes,
               routine_id: selectedRoutineId // Guardamos la vinculación a la rutina
             }, selectedExercises)}
-            className="w-full bg-indigo-600 text-white py-4 rounded-xl font-black text-lg shadow-xl shadow-indigo-200 active:scale-[0.98] transition-all flex items-center justify-center gap-2 uppercase tracking-wide"
+            className="w-full bg-blue-700 text-white py-4 rounded-xl font-bold text-lg shadow-xl shadow-blue-200 active:scale-[0.98] transition-all flex items-center justify-center gap-2 uppercase tracking-wide hover:bg-blue-800"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
             Finalizar Entreno
           </button>
         </div>

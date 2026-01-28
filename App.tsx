@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { AppView, Exercise, Workout, BodyWeightLog, Routine } from './types';
+import { AppView, Exercise, Workout, BodyWeightLog, Routine, FoodLog } from './types';
 import { dbService } from './db';
 import Home from './components/Home';
 import History from './components/History';
@@ -10,6 +10,7 @@ import RoutineList from './components/RoutineList';
 import WorkoutForm from './components/WorkoutForm';
 import Navigation from './components/Navigation';
 import Settings from './components/Settings';
+import MealTracker from './components/MealTracker';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<AppView>('home');
@@ -17,6 +18,7 @@ const App: React.FC = () => {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
   const [weightLogs, setWeightLogs] = useState<BodyWeightLog[]>([]);
   const [routines, setRoutines] = useState<Routine[]>([]);
+  const [foodLogs, setFoodLogs] = useState<FoodLog[]>([]);
   const [editingWorkout, setEditingWorkout] = useState<Workout | null>(null);
 
   const refreshData = () => {
@@ -24,6 +26,7 @@ const App: React.FC = () => {
     setWorkouts(dbService.getWorkouts());
     setWeightLogs(dbService.getBodyWeightLogs());
     setRoutines(dbService.getRoutines());
+    setFoodLogs(dbService.getAllFoodLogs());
   };
 
   useEffect(() => {
@@ -45,13 +48,14 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 pb-20 overflow-x-hidden">
+    <div className="flex flex-col min-h-screen bg-white text-slate-900 pb-20 overflow-x-hidden">
       <main className="flex-1 w-full max-w-lg mx-auto p-4 animate-in fade-in duration-500">
         {currentView === 'home' && (
           <Home
             workouts={workouts}
             exercises={exercises}
             weightLogs={weightLogs}
+            foodLogs={foodLogs}
             onNewWorkout={() => handleViewChange('new-workout')}
             onViewExercise={(exId) => handleViewChange('exercises')}
             onOpenSettings={() => handleViewChange('settings')}
@@ -110,6 +114,20 @@ const App: React.FC = () => {
             }}
             onDelete={(id) => {
               dbService.deleteRoutine(id);
+              refreshData();
+            }}
+          />
+        )}
+
+        {currentView === 'meals' && (
+          <MealTracker
+            logs={foodLogs}
+            onAdd={(log) => {
+              dbService.addFoodLog(log);
+              refreshData();
+            }}
+            onDelete={(id) => {
+              dbService.deleteFoodLog(id);
               refreshData();
             }}
           />

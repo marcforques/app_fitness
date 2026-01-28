@@ -1,5 +1,5 @@
 
-import { Exercise, Workout, BodyWeightLog, ExerciseType, Set, RunningLog, WorkoutExercise, Routine } from './types';
+import { Exercise, Workout, BodyWeightLog, ExerciseType, Set, RunningLog, WorkoutExercise, Routine, FoodLog } from './types';
 import { generateUUID } from './utils';
 
 const STORAGE_KEY = 'miprogreso_db';
@@ -12,6 +12,7 @@ interface DBState {
   running_logs: RunningLog[];
   body_weight_logs: BodyWeightLog[];
   routines: Routine[];
+  food_logs: FoodLog[];
 }
 
 const initialState: DBState = {
@@ -27,7 +28,8 @@ const initialState: DBState = {
   body_weight_logs: [],
   routines: [
     { id: 'r1', name: 'Rutina de Fuerza A', exercise_ids: ['1', '2'], created_at: new Date().toISOString() }
-  ]
+  ],
+  food_logs: []
 };
 
 export const getDB = (): DBState => {
@@ -204,6 +206,36 @@ export const dbService = {
   deleteBodyWeightLog: (id: string) => {
     const db = getDB();
     db.body_weight_logs = db.body_weight_logs.filter(l => l.id !== id);
+    saveDB(db);
+  },
+
+  getAllFoodLogs: () => {
+    return getDB().food_logs || [];
+  },
+
+  getFoodLogsByDate: (date: string) => {
+    return (getDB().food_logs || []).filter(log => log.date === date);
+  },
+
+  addFoodLog: (log: Omit<FoodLog, 'id' | 'created_at'>) => {
+    const db = getDB();
+    // Ensure food_logs exists (migration for old data)
+    if (!db.food_logs) db.food_logs = [];
+
+    const newLog: FoodLog = {
+      ...log,
+      id: generateUUID(),
+      created_at: new Date().toISOString()
+    };
+    db.food_logs.push(newLog);
+    saveDB(db);
+    return newLog;
+  },
+
+  deleteFoodLog: (id: string) => {
+    const db = getDB();
+    if (!db.food_logs) return;
+    db.food_logs = db.food_logs.filter(f => f.id !== id);
     saveDB(db);
   },
 
